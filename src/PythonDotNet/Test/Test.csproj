@@ -6,6 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\echo_and_sleep.py" Link="echo_and_sleep.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\helloworld.py" Link="helloworld.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

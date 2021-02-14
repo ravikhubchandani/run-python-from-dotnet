@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonDotNet", "PythonDotNe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PythonTestScripts", "PythonTestScripts", "{BDE8C010-8A92-4837-B66A-37F6B74C9F53}"
 	ProjectSection(SolutionItems) = preProject
+		echo_and_sleep.py = echo_and_sleep.py
 		helloworld.py = helloworld.py
 	EndProjectSection
 EndProject

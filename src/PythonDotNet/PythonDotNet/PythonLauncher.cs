@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -79,7 +78,7 @@ namespace PythonDotNet
         private PythonProcessOutput Execute(string script, params string[] args)
         {
             var psi = GetBackgroundPythonShell();
-            psi.Arguments = string.Join(" ", script, args);
+            psi.Arguments = $"{script} {string.Join(" ", args)}";
             using (var pproc = Process.Start(psi))
             {
                 var output = pproc.StandardOutput.ReadToEnd();

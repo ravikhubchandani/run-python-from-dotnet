@@ -34,7 +34,7 @@ namespace PythonDotNet
         /// <summary>
         /// Launch multiple Python scripts synchronously
         /// </summary>
-        public IEnumerable<PythonProcessOutput> Launch(PythonProcessInput[] info)
+        public IEnumerable<PythonProcessOutput> Launch(IEnumerable<PythonProcessInput> info)
         {
             return info.Select(x => Execute(x.Script, x.Args));
         }
@@ -58,7 +58,7 @@ namespace PythonDotNet
         /// <summary>
         /// Launch multiple Python scripts asynchronously
         /// </summary>
-        public async Task<IEnumerable<PythonProcessOutput>> LaunchAsync(PythonProcessInput[] info)
+        public async Task<IEnumerable<PythonProcessOutput>> LaunchAsync(IEnumerable<PythonProcessInput> info)
         {
             var tasks = info.Select(x => ExecuteAsync(x.Script, x.Args));
             await Task.WhenAll(tasks);
@@ -84,7 +84,6 @@ namespace PythonDotNet
             {
                 var output = pproc.StandardOutput.ReadToEnd();
                 var errors = pproc.StandardError.ReadToEnd();
-                pproc.WaitForExit();
                 return new PythonProcessOutput
                 {
                     ExitCode = pproc.ExitCode,
@@ -96,7 +95,7 @@ namespace PythonDotNet
 
         private async Task<PythonProcessOutput> ExecuteAsync(string script, params string[] args)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() => Execute(script, args));
         }
     }
 }

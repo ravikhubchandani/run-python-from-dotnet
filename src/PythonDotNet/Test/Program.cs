@@ -12,6 +12,7 @@ namespace Test
         static void Main(string[] args)
         {
             PythonLauncher launcher = new PythonLauncher(@"C:\Program Files\Python3.9.1\python.exe");
+            launcher.TaskTimeout = 30 * 1000; // 30 second timeout
 
             // Test 1 - Simple synchronous task            
             var result = launcher.Launch("helloworld.py");

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +7,7 @@ namespace PythonDotNet
     public class PythonLauncher
     {
         private readonly string _python;
+        public int TaskTimeout { get; set; } = int.MaxValue;
 
         public PythonLauncher(string pythonPath)
         {
@@ -64,32 +64,10 @@ namespace PythonDotNet
             return tasks.Select(x => x.Result);
         }
 
-        private ProcessStartInfo GetBackgroundPythonShell()
-        {
-            var psi = new ProcessStartInfo();
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
-            psi.RedirectStandardOutput = true;
-            psi.RedirectStandardError = true;
-            psi.FileName = _python;
-            return psi;
-        }
-
         private PythonProcessOutput Execute(string script, params string[] args)
         {
-            var psi = GetBackgroundPythonShell();
-            psi.Arguments = $"{script} {string.Join(" ", args)}";
-            using (var pproc = Process.Start(psi))
-            {
-                var output = pproc.StandardOutput.ReadToEnd();
-                var errors = pproc.StandardError.ReadToEnd();
-                return new PythonProcessOutput
-                {
-                    ExitCode = pproc.ExitCode,
-                    Errors = errors,
-                    Output = output
-                };
-            }
+            var processArgs = $"{script} {string.Join(" ", args)}";
+            return ProcessHelper.ExecuteShellCommand(_python, processArgs, TaskTimeout);
         }
 
         private async Task<PythonProcessOutput> ExecuteAsync(string script, params string[] args)

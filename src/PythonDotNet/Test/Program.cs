@@ -11,7 +11,12 @@ namespace Test
     {
         static void Main(string[] args)
         {
+            // Windows
             PythonLauncher launcher = new PythonLauncher(@"C:\Program Files\Python3.9.1\python.exe");
+
+            // Linux
+            //PythonLauncher launcher = new PythonLauncher("python");
+            
             launcher.TaskTimeout = 30 * 1000; // 30 second timeout
 
             // Test 1 - Simple synchronous task            
